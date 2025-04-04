@@ -1,11 +1,13 @@
 
 import './App.css'
+import { Button } from './components/ui/Button'
 
 function App() {
 
   return (
     <>
-      <div className=' bg-amber-500'></div>
+      <Button variant='primary' text='Share' />
+      <Button variant='secondary' text='Add Content' />
     </>
   )
 }

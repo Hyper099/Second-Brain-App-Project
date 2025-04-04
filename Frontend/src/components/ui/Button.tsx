@@ -9,13 +9,19 @@ interface ButtonProps {
    endIcon?: ReactNode
 }
 
-export const Button = (props: ButtonProps) => {
-   return (
-      <button onClick={props.onclick} 
-         
-      >{props.text}</button>
-   ); 
-      
+const variantStyles: Record<string, string> = {
+   "primary": "bg-purpleLight text-purpleDark",
+   "secondary": "bg-purpleDark text-purpleLight"
 }
 
-    <Button />
+export const Button = (props: ButtonProps) => {
+   return (
+      <button
+         onClick={props.onclick}
+         className={variantStyles[props.variant]}
+
+      >{props.text}</button>
+   );
+
+}
+
