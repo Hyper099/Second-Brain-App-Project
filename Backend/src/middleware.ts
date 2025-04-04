@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import jwt from "jsonwebtoken";
+import jwt, { JwtPayload } from "jsonwebtoken";
 
 import { JWT_PASSWORD } from "./config";
 
@@ -7,8 +7,7 @@ export const userAuthMiddleware = (req: Request, res: Response, next: NextFuncti
    const header = req.headers["authorization"];
    const decoded = jwt.verify(header as string, JWT_PASSWORD)
    if (decoded) {
-      //@ts-ignore
-      req.userId = decoded.id;
+      req.userId = (decoded as JwtPayload).id;
       next()
    } else {
       res.status(403).json({

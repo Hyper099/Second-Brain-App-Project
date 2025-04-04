@@ -15,7 +15,7 @@ function App() {
 
   return (
     <>
-      <Button variant='primary' size='md' text='Share' startIcon={<ShareIcon size='md'/>} onclick={shareFunction} />
+      <Button variant='primary' size='md' text='Share Brain' startIcon={<ShareIcon size='md'/>} onclick={shareFunction} />
       <Button variant='secondary' size='md' text='Add Content' startIcon={<PlusIcon size='md'/>} onclick={addContent} />
     </>
   )
