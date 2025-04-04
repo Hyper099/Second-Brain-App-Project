@@ -116,7 +116,7 @@ app.get('/api/v1/brain/:shareLink', (req, res) => { });
 async function main() {
    try {
       const connection = await mongoose.connect(MONGO_URI);
-      console.log(`✅ MongoDB connected:`, connection.connection.name); // Add this
+      console.log(`✅ MongoDB connected:`, connection.connection.name);
       app.listen(PORT, () => {
          console.log(`🚀 Server is running on port ${PORT}`);
       });
