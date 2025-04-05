@@ -15,5 +15,5 @@ const contentSchema = new mongoose.Schema({
    }
 });
 
-const ContentModel = mongoose.model("Content", contentSchema);
+const ContentModel = mongoose.model("Contents", contentSchema);
 export default ContentModel;

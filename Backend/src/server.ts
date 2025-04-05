@@ -4,7 +4,9 @@ import mongoose from 'mongoose';
 import { JWT_PASSWORD, MONGO_URI, PORT } from './config';
 import { userAuthMiddleware } from './middleware';
 import ContentModel from './Schemas/contentSchema';
+import LinkModel from './Schemas/linkSchema';
 import UserModel from './Schemas/userSchema';
+import hashedShareLink from './util';
 
 const app = express();
 app.use(express.json());
@@ -70,7 +72,6 @@ app.post("/api/v1/content", userAuthMiddleware, async (req, res) => {
 
 
 app.get('/api/v1/content', userAuthMiddleware, async (req, res) => {
-   //@ts-ignore
    const userId = req.userId;
 
    try {
@@ -105,12 +106,63 @@ app.delete('/api/v1/content', userAuthMiddleware, async (req, res) => {
    }
 });
 
-app.post('/api/v1/brain/share', (req, res) => { });
+app.post('/api/v1/brain/share', userAuthMiddleware, async (req, res) => {
+   const share: boolean = req.body.share;
+   const userId = req.userId;
+   const hash = hashedShareLink();
+   try {
+      if (share) {
+         await LinkModel.create({
+            userId,
+            hash
+         });
 
-app.get('/api/v1/brain/:shareLink', (req, res) => { });
+         res.status(200).json({
+            shareLink: hash
+         })
+      } else {
+         await LinkModel.deleteMany({
+            userId,
+            hash
+         })
+         res.status(200).json({
+            message: "Removed Share Link Successfully."
+         })
+      }
+   } catch (error) {
+      res.status(500).json({
+         message: "Error while Creating Share link."
+      })
+   }
+});
 
+app.get('/api/v1/brain/:shareLink', async (req, res) => {
+   const { shareLink } = req.params;
 
+   try {
+      if (!shareLink) {
+         res.status(400).json({ message: "No link provided." });
+         return;
+      }
+      
+      const LinkInfo = await LinkModel.findOne({ hash: shareLink }).populate("userId","_id");
+      if (!LinkInfo || !LinkInfo.userId) {
+         res.status(404).json({ message: "Link not found." });
+         return;
+      }
 
+      // Fix TypeScript error by asserting the type
+      const userId = (LinkInfo.userId as { _id: mongoose.Types.ObjectId })._id;
+      const content = await ContentModel.findOne({ userId: userId })
+
+      res.status(200).json({content});
+   } catch (error) {
+      console.error(error);
+      res.status(500).json({
+         message: "Error while fetching share link."
+      });
+   }
+});
 
 //!Server Start and DB connection.
 async function main() {
