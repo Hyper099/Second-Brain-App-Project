@@ -5,3 +5,7 @@
    --color-purpleLight: #E0E7FF;
    --color-purpleMedium: #423BAD;
 }
+
+:root{
+   background-color : #F9FBFC;
+}
