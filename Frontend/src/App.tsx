@@ -1,16 +1,19 @@
 
-import './App.css';
-
-import DashBoard from './pages/DashBoard';
+import { BrowserRouter, Routes, Route } from "react-router-dom"
+import AuthPages from './pages/AuthPages';
+import DashBoard from "./pages/DashBoard";
 
 function App() {
 
-  
 
   return (
-    <>
-      <DashBoard/>
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<AuthPages />} />
+        <Route path="/dashboard" element={<DashBoard />} />
+      </Routes>
+    
+    </BrowserRouter>
   )
 }
 
