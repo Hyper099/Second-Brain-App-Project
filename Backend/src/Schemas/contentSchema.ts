@@ -13,6 +13,8 @@ const contentSchema = new mongoose.Schema({
       ref: 'User',
       required: true
    }
+}, {
+   timestamps: { createdAt: 'addedAt', updatedAt: 'updatedAt' }
 });
 
 const ContentModel = mongoose.model("Contents", contentSchema);
