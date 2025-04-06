@@ -1,23 +1,23 @@
 import { ChangeEvent, FormEvent, useState } from "react";
-import API from "../../API";
 import { useNavigate } from "react-router-dom";
+import API from "../../API";
+import { useAuth } from "../../context/AuthContext";
+
+interface SignInFormData {
+   email: string,
+   password: string,
+}
 
 const SignInForm = () => {
-
-   interface SignInFormData{
-      email: string,
-      password : string,
-   }
-
-
+   
    const [signInForm, setSignInForm] = useState<SignInFormData>({
       email: '',
       password : '',
    })
-
    const [error, setError] = useState('');
    const [success, setSuccess] = useState('');
    const navigate = useNavigate();
+   const { login } = useAuth();
 
    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
       setSignInForm({
@@ -33,12 +33,13 @@ const SignInForm = () => {
 
       try {
          const response = await API.post('/signin', signInForm);
-         console.log(response.data);
-         setSuccess(response.data.message || 'Signup successful!');
+         // console.log(response.data);
+         login(response.data.token)
+         setSuccess(response.data.message || 'SignIn successful!');
          setSignInForm({ email: '', password: '' });
          navigate('/dashboard');
       } catch (error:any) {
-         setError(error.response?.data?.error || 'Error registering');
+         setError(error.response?.data?.error || 'Error Signing In');
       }
 
    }

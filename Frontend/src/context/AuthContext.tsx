@@ -1,35 +1,97 @@
-import { createContext, ReactNode, useEffect, useState } from "react";
+import { createContext, ReactNode, useContext, useEffect, useState } from "react";
+import API from "../API";
 
-interface JWTPayLoad {
+interface JWTPayload {
    id: string;
 }
 
 interface AuthContextType {
-   user: JWTPayLoad | null,
-   token: string | null,
+   isAuthenticated: boolean;
+   user: JWTPayload | null;
+   loading: boolean;
    login: (token: string) => void;
    logout: () => void;
 }
 
 const AuthContext = createContext<AuthContextType>({
+   isAuthenticated: false,
    user: null,
-   token: null,
-   login: () => { },  //! adds token to the localStorgae.
-   logout: () => { } //! removes token from the localStorage.
+   loading: false,
+   login: () => { },
+   logout: () => { }
 });
 
 interface AuthProviderProps {
    children: ReactNode;
 }
 
-export const AuthProvided = ({ children }: AuthProviderProps) => {
-   const [user, setUser] = useState<JWTPayLoad | null>(null);
-   const [token, setToken] = useState<string | null>(null);
+export const AuthProvider = ({ children }: AuthProviderProps) => {
+   const [user, setUser] = useState<JWTPayload | null>(null);
+   const [isAuthenticated, setIsAuthenticated] = useState(false);
+   const [loading, setLoading] = useState(true);
+
 
    useEffect(() => {
-      const exisitingToken = localStorage.getItem("token");
-      if (exisitingToken) {
-         
+      const savedToken = localStorage.getItem("token");
+      if (savedToken) {
+         verifyToken(savedToken);
+      } else {
+         setLoading(false);
       }
-   })
-} 
+   }, []);
+
+   const verifyToken = async (token: string) => {
+      try {
+         const response = await API.post(
+            "/verify-token",
+            {},
+            {
+               headers: {
+                  Authorization: token
+               }
+            }
+         );
+         setUser(response.data);
+         setIsAuthenticated(true);
+      } catch (error) {
+         console.error("Token verification failed:", error);
+         logout();
+      } finally {
+         setLoading(false);
+      }
+   };
+
+   const login = (token: string) => {
+      localStorage.setItem("token", token);
+      setIsAuthenticated(true);
+      setLoading(false);
+   };
+
+   const logout = () => {
+      localStorage.removeItem("token");
+      setUser(null);
+      setIsAuthenticated(false);
+      setLoading(false);
+   };
+
+
+   return (
+      <AuthContext.Provider
+         value={{
+            isAuthenticated,
+            user,
+            loading,
+            login,
+            logout
+         }}
+      >
+         {children}
+      </AuthContext.Provider>
+   );
+};
+
+export const useAuth = () => {
+   const context = useContext(AuthContext);
+   if (!context) throw new Error("useAuth must be used inside AuthProvider");
+   return context;
+};

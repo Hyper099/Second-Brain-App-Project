@@ -1,17 +1,23 @@
-
-import { BrowserRouter, Routes, Route } from "react-router-dom"
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { AuthProvider } from "./context/AuthContext";
+import ProtectedRoute from "./context/ProtectedRoute";
 import AuthPages from './pages/AuthPages';
 import DashBoard from "./pages/DashBoard";
 
 function App() {
-
-
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<AuthPages />} />
-        <Route path="/dashboard" element={<DashBoard />} />
-      </Routes>
+      <AuthProvider>
+        <Routes>
+          <Route path="/" element={<AuthPages />} />
+          <Route path="/login" element={<AuthPages/>}/>
+          <Route path="/dashboard" element={
+            <ProtectedRoute>
+              <DashBoard />
+            </ProtectedRoute>
+            } />
+        </Routes>
+      </AuthProvider>
     
     </BrowserRouter>
   )
