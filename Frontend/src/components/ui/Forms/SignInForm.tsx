@@ -1,7 +1,7 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import API from "../../API";
-import { useAuth } from "../../context/AuthContext";
+import API from "../../../api/API";
+import { useAuth } from "../../../context/AuthContext";
 
 interface SignInFormData {
    email: string,

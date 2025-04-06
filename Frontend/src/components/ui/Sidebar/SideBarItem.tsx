@@ -1,9 +1,10 @@
 import { ReactElement } from "react";
-import DocumentIcon from "../Icons/DocumentIcon";
-import LinkIcon from "../Icons/LinkIcon";
-import TagsIcon from "../Icons/TagsIcon";
-import TwitterIcon from "../Icons/TwitterIcon";
-import YouTubeIcon from "../Icons/YouTubeIcon";
+import DocumentIcon from "../../Icons/DocumentIcon";
+import LinkIcon from "../../Icons/LinkIcon";
+import TagsIcon from "../../Icons/TagsIcon";
+import TwitterIcon from "../../Icons/TwitterIcon";
+import YouTubeIcon from "../../Icons/YouTubeIcon";
+
 
 interface SideBarProps{
    text:string,
@@ -14,7 +15,7 @@ const SideBarIcons: Record<string, ReactElement> = {
    "Tweets": <TwitterIcon />,
    "Documents": <DocumentIcon />,
    "Links": <LinkIcon />,
-   "Tags" : <TagsIcon/>
+   "Tags" : <TagsIcon />
 }
 
 

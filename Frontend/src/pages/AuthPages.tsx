@@ -1,10 +1,10 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { useState } from 'react';
-import GoogleIcon from '../components/Icons/GoogleIcon';
 import GitHubIcon from '../components/Icons/GitHubIcon';
-import SignUpForm from '../components/ui/SignUpForm';
-import SignInForm from '../components/ui/SignInForm';
+import GoogleIcon from '../components/Icons/GoogleIcon';
 import AuthPageUI from '../components/ui/AuthPageUI';
+import SignInForm from '../components/ui/Forms/SignInForm';
+import SignUpForm from '../components/ui/Forms/SignUpForm';
 
 
 const AuthPages = () => {

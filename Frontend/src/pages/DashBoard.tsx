@@ -1,7 +1,7 @@
 
 import Card from "../components/ui/Card";
 import DashBoardHeader from "../components/ui/DashBoardHeader";
-import SideBar from "../components/ui/SideBar";
+import SideBar from "../components/ui/Sidebar/SideBar";
 
 const DashBoard = () => {
    return (
@@ -10,7 +10,7 @@ const DashBoard = () => {
          {/* Sidebar */}
          <SideBar />
 
-         {/* Main content, with margin-left equal to sidebar width (w-64 = 16rem) */}
+         {/* Main content */}
          <div className="ml-64 flex-1 px-10 py-8 min-h-screen">
             <DashBoardHeader />
 

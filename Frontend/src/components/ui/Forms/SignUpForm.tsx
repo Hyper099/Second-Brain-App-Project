@@ -1,5 +1,5 @@
 import { ChangeEvent, FormEvent, useState } from "react";
-import API from "../../API";
+import API from "../../../api/API";
 
 interface FormData {
    firstName: string;

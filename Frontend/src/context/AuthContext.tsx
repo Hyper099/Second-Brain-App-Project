@@ -1,5 +1,5 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from "react";
-import API from "../API";
+import API from "../api/API";
 
 interface JWTPayload {
    id: string;

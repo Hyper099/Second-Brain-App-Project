@@ -24,18 +24,17 @@ const Card = (props: CardProps) => {
    const renderEmbedContent = () => {
       if (props.type === "youtube") {
          const trimmedLink = props.link.split("&")[0];
-         const finalLik = trimmedLink.replace("watch?v=", "embed/");
+         const finalLink = trimmedLink.replace("watch?v=", "embed/");
 
          return (
             <div className="relative w-full h-0 pb-[56.25%]"> {/* 16:9 Aspect Ratio */}
-            <iframe
-               src={finalLik}
-               className="absolute top-0 left-0 w-full h-full rounded-xl"
-               title={props.title}
-               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-               referrerPolicy="strict-origin-when-cross-origin"
-               allowFullScreen>
-            
+               <iframe
+                  src={finalLink}
+                  className="absolute top-0 left-0 w-full h-full rounded-xl"
+                  title={props.title}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  allowFullScreen>
                </iframe>
             </div>
          );
@@ -78,9 +77,7 @@ const Card = (props: CardProps) => {
                   day: 'numeric'
                }) ?? "N/A"}
             </p>
-            
          </div>
-
       </div>
    );
 };

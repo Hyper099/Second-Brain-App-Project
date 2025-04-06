@@ -1,5 +1,5 @@
-import { useAuth } from "../../context/AuthContext";
-import Logos from "../Icons/Logos";
+import { useAuth } from "../../../context/AuthContext";
+import Logos from "../../Icons/Logos";
 import SideBarItem from "./SideBarItem";
 
 const SideBar = () => {
