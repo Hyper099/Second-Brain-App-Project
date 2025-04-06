@@ -29,7 +29,7 @@ const SideBarItem = (props: SideBarProps) => {
             {SideBarIcons[props.text]}
          </div>
 
-         <div className="text-gray-600 group-hover:text-black transition-colors duration-200 text-xl ml-4 font-medium">
+         <div className="text-gray-600 group-hover:text-black transition-colors duration-200 text-lg ml-4 font-medium">
             {props.text}
          </div>
       </div>

@@ -17,8 +17,8 @@ const DashBoardHeader = () => {
          </div>
 
          <div className="flex gap-4">
-            <Button variant="primary" size="lg" startIcon={<ShareIcon size="lg" />} text="Share Brain" onclick={shareFunction} />
-            <Button variant="secondary" size="lg" startIcon={<PlusIcon size="lg" />} text="Add Content" onclick={addContent} />
+            <Button variant="primary" size="md" startIcon={<ShareIcon size="md" />} text="Share Brain" onclick={shareFunction} />
+            <Button variant="secondary" size="md" startIcon={<PlusIcon size="md" />} text="Add Content" onclick={addContent} />
          </div>
       </div>
    );

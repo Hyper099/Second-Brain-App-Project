@@ -3,7 +3,7 @@ import SideBarItem from "./SideBarItem";
 
 const SideBar = () => {
    return (
-      <div className="flex-1 bg-white min-h-screen outline outline-gray-200 rounded-xl p-5">
+      <div className="flex-1 bg-white min-h-screen outline outline-gray-200 rounded-xl p-5 fixed">
          <div className="flex justify-items-start font-bold gap-3 " >
             <Logos />
             <span className="text-3xl">

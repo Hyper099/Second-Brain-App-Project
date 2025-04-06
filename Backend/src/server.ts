@@ -1,41 +1,63 @@
+import bcrypt from 'bcrypt';
+import cors from 'cors';
 import express from 'express';
 import jwt from 'jsonwebtoken';
 import mongoose from 'mongoose';
 import { JWT_PASSWORD, MONGO_URI, PORT } from './config';
+import ContentModel from './Database/ContentModel';
+import LinkModel from './Database/LinkModel';
+import UserModel from './Database/UserModel';
 import { userAuthMiddleware } from './middleware';
-import ContentModel from './Schemas/contentSchema';
-import LinkModel from './Schemas/linkSchema';
-import UserModel from './Schemas/userSchema';
+import { LoginSchema, SignUpSchema } from './Schemas/validationSchemas';
 import hashedShareLink from './util';
 
 const app = express();
 app.use(express.json());
+app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 
-//? Routes
-//* auth routes
 app.post('/api/v1/signup', async (req, res) => {
-   const { email, password } = req.body;
+   const result = SignUpSchema.safeParse(req.body);
+   if (!result.success) {
+      res.status(400).json({ error: result.error.format() });
+      return;
+   }
+   const { email, password, firstName, lastName } = result.data;
+   const hashedPassword = await bcrypt.hash(password, 10);
 
    try {
-      const user = await UserModel.create({ email, password });
-      res.status(201).json({ message: 'User created successfully', user });
+      await UserModel.create({ firstName, lastName, email,password: hashedPassword });
+      res.status(201).json({ message: 'User created successfully' });
    } catch (error) {
       res.status(500).json({ message: 'Failed to create user', error });
    }
 });
 
 app.post("/api/v1/signin", async (req, res) => {
-   const { email, password } = req.body;
-   try {
-      const existingUser = await UserModel.findOne({ email, password });
-      if (existingUser) {
-         const token = jwt.sign({ id: existingUser._id }, JWT_PASSWORD)
+   const result = LoginSchema.safeParse(req.body);
+   if (!result.success) {
+      res.status(400).json({ error: result.error.format() });
+      return;
+   }
 
-         res.status(200).json({ "message": "SignedIn Successfully", token });
-      } else {
-         res.status(403).json({
-            message: "Incorrect credentials"
+   const { email, password } = result.data;
+
+   try {
+      const existingUser = await UserModel.findOne({ email });
+      if (!existingUser) {
+         res.status(400).json({ message: "No User Found with such Email Id." });
+         return;
+      }
+
+      const isMatch = await bcrypt.compare(password, existingUser.password);
+      if (isMatch) {
+         const token = jwt.sign({ id: existingUser._id }, JWT_PASSWORD);
+         res.status(200).json({
+            message: "Signed In successfully.",
+            token
          })
+      } else {
+         res.status(400).json({ message: "Incorrect Credentials." });
+         return;
       }
    } catch (error) {
       res.status(500).json({
@@ -43,7 +65,6 @@ app.post("/api/v1/signin", async (req, res) => {
          error
       })
    }
-
 })
 
 
@@ -51,7 +72,6 @@ app.post("/api/v1/signin", async (req, res) => {
 app.post("/api/v1/content", userAuthMiddleware, async (req, res) => {
    try {
       const { link, title, type } = req.body;
-      //@ts-ignore
       const userId = req.userId;
 
       const newContent = await ContentModel.create({
@@ -144,8 +164,8 @@ app.get('/api/v1/brain/:shareLink', async (req, res) => {
          res.status(400).json({ message: "No link provided." });
          return;
       }
-      
-      const LinkInfo = await LinkModel.findOne({ hash: shareLink }).populate("userId","_id");
+
+      const LinkInfo = await LinkModel.findOne({ hash: shareLink }).populate("userId", "_id");
       if (!LinkInfo || !LinkInfo.userId) {
          res.status(404).json({ message: "Link not found." });
          return;
@@ -155,7 +175,7 @@ app.get('/api/v1/brain/:shareLink', async (req, res) => {
       const userId = (LinkInfo.userId as { _id: mongoose.Types.ObjectId })._id;
       const content = await ContentModel.findOne({ userId: userId })
 
-      res.status(200).json({content});
+      res.status(200).json({ content });
    } catch (error) {
       console.error(error);
       res.status(500).json({

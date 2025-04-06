@@ -1,6 +1,52 @@
+import { ChangeEvent, FormEvent, useState } from "react";
+import API from "../../API";
+import { useNavigate } from "react-router-dom";
+
 const SignInForm = () => {
+
+   interface SignInFormData{
+      email: string,
+      password : string,
+   }
+
+
+   const [signInForm, setSignInForm] = useState<SignInFormData>({
+      email: '',
+      password : '',
+   })
+
+   const [error, setError] = useState('');
+   const [success, setSuccess] = useState('');
+   const navigate = useNavigate();
+
+   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+      setSignInForm({
+         ...signInForm,
+         [e.target.name]: e.target.value
+      });
+   }
+
+   const handleSubmit = async(e: FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      setError('');
+      setSuccess('');
+
+      try {
+         const response = await API.post('/signin', signInForm);
+         console.log(response.data);
+         setSuccess(response.data.message || 'Signup successful!');
+         setSignInForm({ email: '', password: '' });
+         navigate('/dashboard');
+      } catch (error:any) {
+         setError(error.response?.data?.error || 'Error registering');
+      }
+
+   }
+
    return (
-      <form className="space-y-6">
+      <form onSubmit={handleSubmit} className="space-y-6">
+         {error && <p className="text-red-500 text-center">{error}</p>}
+         {success && <p className="text-green-500 text-center">{success}</p>}
          <div>
             <label htmlFor="email" className="block text-sm font-medium text-gray-700">
                Email address
@@ -10,6 +56,8 @@ const SignInForm = () => {
                name="email"
                type="email"
                autoComplete="email"
+               value={signInForm.email}
+               onChange={handleChange}
                required
                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-purple-500 focus:border-purple-500"
             />
@@ -23,6 +71,8 @@ const SignInForm = () => {
                id="password"
                name="password"
                type="password"
+               value={signInForm.password}
+               onChange={handleChange}
                autoComplete="current-password"
                required
                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-purple-500 focus:border-purple-500"

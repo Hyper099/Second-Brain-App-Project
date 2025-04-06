@@ -43,7 +43,7 @@ const Card = (props: CardProps) => {
 
       if (props.type === "twitter") {
          return (
-            <blockquote className="twitter-tweet">
+            <blockquote className="twitter-tweet relative w-full h-0 pb-[56.25%]">
                <a href={props.link.replace("x.com","twitter.com")}></a>
             </blockquote>
          );
