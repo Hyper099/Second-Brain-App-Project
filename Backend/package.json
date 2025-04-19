@@ -5,7 +5,7 @@
   "scripts": {
     "build": "tsc -b",
     "build-and-run": "npm run build && node dist/server.js",
-    "start": "node dist/server.js",
+    "start": "npx nodemon src/server.ts",
     "dev": "nodemon"
   },
   "keywords": [],
