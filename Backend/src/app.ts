@@ -11,7 +11,7 @@ const app = express();
 app.use(express.json());
 const allowedOrigins = [
    "http://localhost:5173",
-   "https://second-brain-app-project-8w4q.vercel.app"
+   "https://second-brain-app-project.vercel.app"
 ];
 
 app.use(cors({
