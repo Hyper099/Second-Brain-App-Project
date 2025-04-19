@@ -31,4 +31,11 @@ app.use("/api/v1/", contentRouter);
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/brain", shareRouter);
 
+app.get("/", (req, res) => {
+   res.status(200).json({
+      message: "Welcome to the Second Brain API",
+      status: "success"
+   });
+});
+
 export default app;
