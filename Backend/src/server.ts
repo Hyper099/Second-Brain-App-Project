@@ -1,6 +1,10 @@
 import mongoose from "mongoose";
 import app from "./app";
 import { MONGO_URI, PORT } from "./Secrets/config";
+import dotenv from 'dotenv';
+
+// Load .env config before anything else
+dotenv.config();
 
 //!Server Start and DB connection.
 async function main() {

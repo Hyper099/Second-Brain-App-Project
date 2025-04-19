@@ -10,7 +10,7 @@ userRouter.get("/details", userAuthMiddleware, async(req, res) => {
    try {
       const result = await UserModel.findOne({
          _id: userId
-      }).select("-password,-email");
+      }).select("firstName lastName");
 
       res.status(200).json(result);
    } catch (error) {
