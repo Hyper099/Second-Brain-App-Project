@@ -1,3 +1,4 @@
 /Backend/src/Secrets
 /Backend/src/Secrets/config.ts
 /Frontend/node_modules
+/Backend/.env
