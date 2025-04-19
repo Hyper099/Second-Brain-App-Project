@@ -43,8 +43,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
    const verifyToken = async (token: string) => {
       try {
          const response = await API.post(
-            "/verify-token",
-            {},
+            "/verify-token",{},
             {
                headers: {
                   Authorization: token

@@ -1,17 +1,40 @@
+import { useEffect, useState } from "react";
+import API from "../../../api/API";
 import { useAuth } from "../../../context/AuthContext";
 import Logos from "../../Icons/Logos";
 import SideBarItem from "./SideBarItem";
 
+interface UserDetails {
+   firstName: string;
+}
+
 const SideBar = () => {
-   const { user, logout } = useAuth();
+   const [user, setUser] = useState<UserDetails | null>(null);
+   const { logout } = useAuth();
 
-   // const getUserDetails = (user) => {
-   //    const userDetails = await API.get('/user/details')
-   // }
+   useEffect(() => {
+      const fetchUser = async () => {
+         const token = localStorage.getItem("token");
 
+         if (token) {
+            try {
+               const response = await API.get("/user/details", {
+                  headers: {
+                     Authorization: token
+                  }
+               });
+               setUser(response.data); // <- correct way to access the data
+            } catch (err) {
+               console.error("Error fetching user: ", err);
+            }
+         }
+      };
+
+      fetchUser();
+   }, []);
 
    return (
-      <div className="flex flex-col justify-between bg-white min-h-screen outline outline-gray-200 rounded-xl p-5 fixed w-64">
+      <div className="flex flex-col justify-between bg-white min-h-screen outline outline-gray-200 rounded-xl p-5 fixed w-72 ">
          {/* Top Section */}
          <div>
             <div className="flex items-center font-bold gap-3 mb-8">
@@ -30,15 +53,20 @@ const SideBar = () => {
 
          {/* Bottom Section */}
          <div className="mt-8 border-t pt-4 px-2">
-            <div className="flex items-center gap-3 mb-3">
-               <div className="w-10 h-10 rounded-full bg-purple-200 flex items-center justify-center text-purple-700 font-semibold text-lg">
-                  {user?.id?.charAt(0)?.toUpperCase() || "U"}
+            {user ? (
+               <div className="flex items-center gap-3 mb-3">
+                  <div className="w-10 h-10 rounded-full bg-purple-200 flex items-center justify-center text-purple-700 font-semibold text-lg">
+                     {user.firstName?.charAt(0).toUpperCase()}
+                  </div>
+                  <div>
+                     <p>
+                        <span>Welcome, </span>
+                        <span className="text-md font-semibold">{user.firstName}</span> </p>
+                  </div>
                </div>
-               <div>
-                  <p className="text-sm font-semibold">User ID</p>
-                  <p className="text-xs text-gray-500 truncate w-40">{user?.id}</p>
-               </div>
-            </div>
+            ) : (
+               <p className="text-sm text-gray-400 mb-4">Loading user...</p>
+            )}
 
             <button
                onClick={logout}

@@ -11,7 +11,7 @@ const DashBoard = () => {
          <SideBar />
 
          {/* Main content */}
-         <div className="ml-64 flex-1 px-10 py-8 min-h-screen">
+         <div className="ml-72 flex-1 px-10 py-8 min-h-screen">
             <DashBoardHeader />
 
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 p-2">
@@ -19,6 +19,9 @@ const DashBoard = () => {
                <Card addedOn={new Date()} title="Ramen" type="youtube" link="https://www.youtube.com/watch?v=WW62RWXMlTc" />
                <Card addedOn={new Date()} title="Ramen" type="youtube" link="https://www.youtube.com/watch?v=WW62RWXMlTc" />
                <Card addedOn={new Date()} title="Ramen" type="youtube" link="https://www.youtube.com/watch?v=WW62RWXMlTc" />
+               <Card addedOn={new Date()} title="Ramen" type="youtube" link="https://www.youtube.com/watch?v=WW62RWXMlTc" />
+               <Card addedOn={new Date()} title="Ramen" type="youtube" link="https://www.youtube.com/watch?v=WW62RWXMlTc" />
+               <Card addedOn={new Date()} title="Ramen" type="youtube" link="https://www.youtube.com/watch?v=lVzb6pmel_E&ab_channel=SheryiansCodingSchool" />
             </div>
          </div>
       </div>
