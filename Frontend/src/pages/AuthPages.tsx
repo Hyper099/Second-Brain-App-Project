@@ -22,13 +22,13 @@ const AuthPages = () => {
                {/* Toggle between Sign In and Sign Up */}
                <div className="flex mb-8 border-b">
                   <button
-                     className={`pb-4 px-4 text-lg font-medium ${isSignIn ? 'text-purple-700 border-b-2 border-purple-700' : 'text-gray-400'}`}
+                     className={`pb-4 px-4 text-lg font-medium hover:cursor-pointer ${isSignIn ? 'text-purple-700 border-b-2 border-purple-700' : 'text-gray-400'}`}
                      onClick={() => setIsSignIn(true)}
                   >
                      Sign In
                   </button>
                   <button
-                     className={`pb-4 px-4 text-lg font-medium ${!isSignIn ? 'text-purple-700 border-b-2 border-purple-700' : 'text-gray-400'}`}
+                     className={`pb-4 px-4 text-lg font-medium hover:cursor-pointer ${!isSignIn ? 'text-purple-700 border-b-2 border-purple-700' : 'text-gray-400'}`}
                      onClick={() => setIsSignIn(false)}
                   >
                      Sign Up

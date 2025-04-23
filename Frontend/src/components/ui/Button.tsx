@@ -20,7 +20,7 @@ const variantSizes: Record<string, string> = {
    "lg": "py-3 px-6 text-lg"
 }
 
-const defaultStyle = "rounded-xl flex gap-2 cursor-pointer items-center transition-all duration-200  ease-in-out font-medium group"
+const defaultStyle = "rounded-xl flex gap-2 cursor-pointer items-center transition-all duration-200  ease-in-out font-medium group hover:cursor-pointer"
 
 export const Button = (props: ButtonProps) => {
    return (
