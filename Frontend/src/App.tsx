@@ -7,10 +7,12 @@ import DashBoard from "./pages/DashBoard";
 
 function App() {
   return (
+    
     <BrowserRouter>
+      <Analytics />
+
       <AuthProvider>
         <Routes>
-          <Analytics/>
           <Route path="/" element={<AuthPages />} />
           <Route path="/login" element={<AuthPages/>}/>
           <Route path="/dashboard" element={
