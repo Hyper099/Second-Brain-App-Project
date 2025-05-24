@@ -69,7 +69,7 @@ const Card = (props: CardProps) => {
             <div className="flex items-center gap-4 text-gray-500">
                <div className="text-xl">{ConditionalIconLoader[props.type]}</div>
                <h1
-                  className="text-xl font-semibold text-black truncate max-w-[250px]"
+                  className="text-xl font-semibold text-black truncate max-w-[200px]"
                   title={props.title}
                >
                   {props.title}

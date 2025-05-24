@@ -67,7 +67,7 @@ const DashBoardHeader = (props:DashBoardHeaderProps) => {
 
    return (
       <div className="flex justify-between items-center mb-6">
-         <div className="text-2xl font-bold">
+         <div className="text-[20px] font-bold">
             All Notes
          </div>
 

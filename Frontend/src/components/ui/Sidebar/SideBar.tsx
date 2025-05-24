@@ -39,7 +39,7 @@ const SideBar = () => {
          <div>
             <div className="flex items-center font-bold gap-3 mb-8">
                <Logos />
-               <span className="text-3xl">Second Brain</span>
+               <span className="text-2xl">Second Brain</span>
             </div>
 
             <div className="flex flex-col gap-5 mx-2">
