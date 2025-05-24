@@ -23,7 +23,7 @@ const SideBar = () => {
                      Authorization: token
                   }
                });
-               setUser(response.data); // <- correct way to access the data
+               setUser(response.data);
             } catch (err) {
                console.error("Error fetching user: ", err);
             }
@@ -35,7 +35,7 @@ const SideBar = () => {
 
    return (
       <div className="flex flex-col justify-between bg-white min-h-screen outline outline-gray-200 rounded-xl p-5 fixed w-72 ">
-         {/* Top Section */}
+         {/*//! Top Section */}
          <div>
             <div className="flex items-center font-bold gap-3 mb-8">
                <Logos />
@@ -51,7 +51,7 @@ const SideBar = () => {
             </div>
          </div>
 
-         {/* Bottom Section */}
+         {/*//! Bottom Section */}
          <div className="mt-8 border-t pt-4 px-2">
             {user ? (
                <div className="flex items-center gap-3 mb-3">
@@ -70,7 +70,8 @@ const SideBar = () => {
 
             <button
                onClick={logout}
-               className="w-full text-sm bg-purple-100 hover:bg-purple-200 text-purple-700 py-2 px-3 rounded-lg transition"
+               className="w-full text-sm bg-purple-100 hover:bg-purple-200 text-purple-700 py-2 px-3 rounded-lg transition
+               cursor-pointer"
             >
                Logout
             </button>

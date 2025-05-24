@@ -19,7 +19,6 @@ const SideBarIcons: Record<string, ReactElement> = {
 }
 
 
-
 const SideBarItem = (props: SideBarProps) => {
    return (
       <div className="flex items-center text-lg cursor-pointer p-3 rounded-xl

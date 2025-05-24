@@ -30,9 +30,9 @@ contentRouter.get('/content', userAuthMiddleware, async (req, res) => {
    const userId = req.userId;
 
    try {
-      const content = await ContentModel.findOne({
+      const content = await ContentModel.find({
          userId: userId
-      }).populate("userId", "email");
+      })
 
       res.status(200).json({
          content: content
