@@ -20,15 +20,11 @@ const ConditionalIconLoader: Record<string, ReactElement> = {
 };
 
 const Card = (props: CardProps) => {
-   // When it's a Twitter card, after the blockquote is rendered
-   // call twttr.widgets.load() so Twitter turns it into an embed.
    useEffect(() => {
       if (props.type === "twitter") {
-         // If the widgets.js script is already loaded, just re-run
          if (window?.twttr?.widgets) {
             window.twttr.widgets.load();
          } else {
-            // Otherwise inject the script once
             const script = document.createElement("script");
             script.src = "https://platform.twitter.com/widgets.js";
             script.async = true;
@@ -56,7 +52,6 @@ const Card = (props: CardProps) => {
       }
 
       if (props.type === "twitter") {
-         // The blockquote + link alone is enough; widgets.js will hydrate it.
          return (
             <blockquote className="twitter-tweet">
                <a href={props.link.replace("x.com", "twitter.com")} />
@@ -73,8 +68,14 @@ const Card = (props: CardProps) => {
          <div className="flex items-center justify-between mb-6">
             <div className="flex items-center gap-4 text-gray-500">
                <div className="text-xl">{ConditionalIconLoader[props.type]}</div>
-               <h1 className="text-xl font-semibold text-black">{props.title}</h1>
+               <h1
+                  className="text-xl font-semibold text-black truncate max-w-[250px]"
+                  title={props.title}
+               >
+                  {props.title}
+               </h1>
             </div>
+
             <div className="flex items-center gap-3 text-gray-500">
                <ShareIcon size="md" />
                <TrashIcon />

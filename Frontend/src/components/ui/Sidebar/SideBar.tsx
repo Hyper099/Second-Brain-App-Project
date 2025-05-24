@@ -44,7 +44,7 @@ const SideBar = () => {
 
             <div className="flex flex-col gap-5 mx-2">
                <SideBarItem text="Tweets" />
-               <SideBarItem text="Videos" />
+               <SideBarItem text="YouTube Videos" />
                <SideBarItem text="Documents" />
                <SideBarItem text="Links" />
                <SideBarItem text="Tags" />

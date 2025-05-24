@@ -11,7 +11,7 @@ interface SideBarProps{
 }
 
 const SideBarIcons: Record<string, ReactElement> = {
-   "Videos": <YouTubeIcon />,
+   "YouTube Videos": <YouTubeIcon />,
    "Tweets": <TwitterIcon />,
    "Documents": <DocumentIcon />,
    "Links": <LinkIcon />,

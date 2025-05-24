@@ -18,7 +18,7 @@ interface DashBoardHeaderProps {
 const DashBoardHeader = (props:DashBoardHeaderProps) => {
 
    const [addContentModal, setAddContentModal] = useState(false);
-   const [shareContentModal, setShareContentModal] = useState(false);
+   // const [shareContentModal, setShareContentModal] = useState(false);
 
    const [contentForm, setContentForm] = useState<contentData>({
       title: "",
@@ -35,7 +35,8 @@ const DashBoardHeader = (props:DashBoardHeaderProps) => {
    };
 
    function shareFunction() {
-      setShareContentModal(true);
+      // setShareContentModal(true);
+      alert("Share button Clicked.")
    }
 
    function openAddContentModal() {
@@ -126,11 +127,7 @@ const DashBoardHeader = (props:DashBoardHeaderProps) => {
          )}
 
 
-         {shareContentModal && (
-            <div className="modal">
-               {/* Modal content for sharing content */}
-            </div>
-         )}
+        
       </div>
    );
 }
