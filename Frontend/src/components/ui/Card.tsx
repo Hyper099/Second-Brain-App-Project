@@ -63,7 +63,7 @@ const Card = (props: CardProps) => {
    };
 
    return (
-      <div className="bg-white text-black shadow rounded-xl p-6 min-h-[440px] w-full outline outline-gray-200 flex flex-col">
+      <div className="bg-white text-black shadow rounded-xl p-6 min-h-[400px] w-full outline outline-gray-200 flex flex-col">
          {/* Header */}
          <div className="flex items-center justify-between mb-6">
             <div className="flex items-center gap-4 text-gray-500">

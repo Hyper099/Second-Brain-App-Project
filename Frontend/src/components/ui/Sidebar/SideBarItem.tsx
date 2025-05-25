@@ -6,8 +6,9 @@ import TwitterIcon from "../../Icons/TwitterIcon";
 import YouTubeIcon from "../../Icons/YouTubeIcon";
 
 
-interface SideBarProps{
-   text:string,
+interface SideBarProps {
+   text: string,
+   isCollapsed: boolean,
 }
 
 const SideBarIcons: Record<string, ReactElement> = {
@@ -15,13 +16,13 @@ const SideBarIcons: Record<string, ReactElement> = {
    "Tweets": <TwitterIcon />,
    "Documents": <DocumentIcon />,
    "Links": <LinkIcon />,
-   "Tags" : <TagsIcon />
+   "Tags": <TagsIcon />
 }
 
 
 const SideBarItem = (props: SideBarProps) => {
    return (
-      <div className="flex items-center text-lg cursor-pointer p-3 rounded-xl
+      <div className="flex items-center text-md cursor-pointer p-3 rounded-xl
                      bg-transparent group
                      hover:bg-gray-100
                      transition-colors duration-200">
@@ -29,9 +30,11 @@ const SideBarItem = (props: SideBarProps) => {
             {SideBarIcons[props.text]}
          </div>
 
-         <div className="text-gray-600 group-hover:text-black transition-colors duration-200 text-lg ml-4 font-medium">
-            {props.text}
-         </div>
+         {!props.isCollapsed && (
+            <div className="text-gray-700 group-hover:text-black transition-colors duration-200 text-md ml-4 font-medium truncate">
+               {props.text}
+            </div>
+         )}
       </div>
    );
 };

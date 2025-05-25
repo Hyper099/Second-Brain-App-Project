@@ -6,7 +6,6 @@ import DashBoardHeader from "../components/ui/DashBoardHeader";
 import SideBar from "../components/ui/Sidebar/SideBar";
 
 interface ContentItem {
-   _id: string;
    title: string;
    link: string;
    type: 'notes' | 'youtube' | 'twitter';
@@ -17,7 +16,10 @@ const DashBoard = () => {
 
    const [contents, setContents] = useState<ContentItem[]>([]);
    const [contentEmpty, setContentEmpty] = useState(true);
+   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+   const [loading, setLoading] = useState(true);
 
+   //! Fetch Contents from Backend.
    const fetchContent = async () => {
       const token = localStorage.getItem("token");
       try {
@@ -39,8 +41,29 @@ const DashBoard = () => {
          console.error("Error while fetching Content. ", error);
          setContentEmpty(true);
          setContents([]);
+      } finally {
+         setLoading(false);
       }
    }
+
+   //! Listen for Sidebar Changes.
+   useEffect(() => {
+      const handleSidebarToggle = () => {
+         const sidebar = document.querySelector('[data-sidebar]');
+         if (sidebar) {
+            setSidebarCollapsed(sidebar.classList.contains('w-20'));
+         }
+      };
+
+      const observer = new MutationObserver(handleSidebarToggle);
+      const sidebar = document.querySelector('[data-sidebar]');
+
+      if (sidebar) {
+         observer.observe(sidebar, { attributes: true, attributeFilter: ['class'] });
+      }
+
+      return () => observer.disconnect();
+   }, []);
 
 
    //! Fetch Contents
@@ -57,15 +80,31 @@ const DashBoard = () => {
          <SideBar />
 
          {/* //! Main Content */}
-         <div className="ml-72 flex-1 px-10 py-8 min-h-screen">
+         <div className={`
+            flex-1 px-5 py-8 min-h-screen
+            ${sidebarCollapsed
+               ? 'ml-20'
+               : 'ml-70'
+            }
+            `}>
             <DashBoardHeader onContentModified={fetchContent} />
-
-            {contentEmpty ? (
+            {loading ? (
+               <div className="flex items-center justify-center py-16">
+                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+                  <span className="ml-3 text-gray-600">Loading...</span>
+               </div>
+            ) : contentEmpty ? (
                <div className="text-gray-500 text-lg mt-10 text-center">
                   No content available. Click "Add Content" to get started.
                </div>
             ) : (
-               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 p-2">
+               <div className={`
+                  grid gap-5
+                  ${sidebarCollapsed
+                     ? 'grid-cols-1 sm:grid-cold-2 lg:grid-cols-3 xl:grid-cols-4'
+                     : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3'
+                     }`}
+                  >
                   {contents.map((item) => {
                      return (
                         <Card
